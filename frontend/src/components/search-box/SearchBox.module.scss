@@ -1,0 +1,40 @@
+
+.search-box {
+    min-width: 300px;
+    margin-left: auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding: 2px;
+    border: solid 2px var(--primary-light);
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    &:focus-within {
+      border-color: var(--primary);
+    }
+
+    input {
+      flex: 1;
+      padding: 0 5px;
+      border: none;
+      border-radius: inherit;
+      background-color: #f8f9fa;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      width: 32px;
+      border: none;
+      border-radius: inherit;
+      background-color: #f8f9fa;
+      text-align: center;
+
+      .search-icon {
+        color: var(--text-color);
+      }
+    }
+  }

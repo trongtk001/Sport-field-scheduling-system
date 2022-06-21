@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1433:1433"
+    volumes:
+      - ~/apps/mssql/data:/var/lib/mssqlql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mssql1Ipw
+    networks:
+      - goals-net
+
+  backend:
+    stdin_open: true
+    tty: true
+    container_name: backend-spring-app
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+      - /app/.idea
+      - /app/target
+    depends_on:
+      - mssql
+    networks:
+      - goals-net
+
+networks:
+  goals-net:
+
+
+      
+  
+  

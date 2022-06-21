@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Test authentication">
+
+
+<!--    <test name="register successful">-->
+<!--        <classes>-->
+<!--            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">-->
+<!--                <methods>-->
+<!--                    <include name="testRegisterSuccessful"></include>-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+    <test name="register failed">
+        <classes>
+            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+                <methods>
+                    <include name="testRegisterFailed"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+
+    <test name="login successful">
+        <parameter name="username" value="user"></parameter>
+        <parameter name="password" value="password"></parameter>
+        <classes>
+            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+                <methods>
+                    <include name="testLoginSuccessful"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="login failed">
+        <parameter name="username" value="user"></parameter>
+        <parameter name="password" value="password1"></parameter>
+        <classes>
+            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+                <methods>
+                    <include name="testLoginFailed"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="login">
+        <parameter name="username" value="user"></parameter>
+        <parameter name="password" value="password1"></parameter>
+        <classes>
+            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+                <methods>
+                    <include name="testLogout"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
