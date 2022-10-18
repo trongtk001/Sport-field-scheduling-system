@@ -35,23 +35,23 @@ public class FieldMapper {
     }
 
     public List<FieldEntity> toEntityList(List<FieldDTO> fieldDTOS) {
-        List<FieldEntity> fieldEntities = new ArrayList<>();
+        List<FieldEntity> entities = new ArrayList<>();
 
         fieldDTOS.forEach((fieldDTO -> {
-            fieldEntities.add(modelMapper.map(fieldDTO, FieldEntity.class));
+            entities.add(modelMapper.map(fieldDTO, FieldEntity.class));
         }));
 
-        return fieldEntities;
+        return entities;
     }
 
     public List<FieldDTO> toDTOList(List<FieldEntity> fieldEntities) {
-        List<FieldDTO> fieldDTOS = new ArrayList<>();
+        List<FieldDTO> dtos = new ArrayList<>();
 
         fieldEntities.forEach(entity -> {
-            fieldDTOS.add(modelMapper.map(entity, FieldDTO.class));
+            dtos.add(modelMapper.map(entity, FieldDTO.class));
         });
 
-        return fieldDTOS;
+        return dtos;
     }
 
 }

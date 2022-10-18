@@ -1,40 +1,59 @@
 package com.example.sportfieldschedulingsystem.mapper;
 
 import com.example.sportfieldschedulingsystem.dto.UserDTO;
-import com.example.sportfieldschedulingsystem.entity.RoleEntity;
 import com.example.sportfieldschedulingsystem.entity.UserEntity;
 import com.example.sportfieldschedulingsystem.repository.RoleRepository;
+import com.example.sportfieldschedulingsystem.security.UserDetailsImpl;
 import org.modelmapper.Conditions;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
 
-    private final ModelMapper modelMapper;
+    private ModelMapper modelMapper;
 
-    private final RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     public UserMapper(ModelMapper modelMapper, RoleRepository roleRepository) {
         this.modelMapper = modelMapper;
         this.roleRepository = roleRepository;
-        modelMapper.addMappings(toDTOEntityPropertyMap);
+        try {
+            modelMapper.addMappings(entityToDTOPropertyMap);
+            modelMapper.addMappings(detailsToDTOPropertyMap);
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
     }
 
-    PropertyMap<UserEntity, UserDTO> toDTOEntityPropertyMap = new PropertyMap<UserEntity, UserDTO>() {
+    PropertyMap<UserEntity, UserDTO> entityToDTOPropertyMap = new PropertyMap<UserEntity, UserDTO>() {
         @Override
         protected void configure() {
+            map(source.getRolesName(), destination.getRoles());
+            skip(destination.getPassword());
+        }
+    };
+
+
+    PropertyMap<UserDetailsImpl, UserDTO> detailsToDTOPropertyMap = new PropertyMap<UserDetailsImpl, UserDTO>() {
+        @Override
+        protected void configure() {
+            map(source.getRolesName(), destination.getRoles());
             skip(destination.getPassword());
         }
     };
 
     public UserEntity toEntity(UserDTO dto) {
         UserEntity entity = modelMapper.map(dto, UserEntity.class);
-        entity.setRoleEntities(toRoleEntity(dto.getRoles()));
+        entity.setRoleEntities(dto.getRoles().stream().map(role -> roleRepository.findOneByRoleName(role)).collect(Collectors.toList()));
         return entity;
     }
 
@@ -42,56 +61,36 @@ public class UserMapper {
         modelMapper.getConfiguration().setPropertyCondition(Conditions.isNotNull());
         modelMapper.map(dto, entity);
 
-       if (dto.getRoles() != null) {
-           entity.setRoleEntities(toRoleEntity(dto.getRoles()));
-       }
-
         return entity;
     }
 
     public UserDTO toDTO(UserEntity entity) {
         UserDTO dto = modelMapper.map(entity, UserDTO.class);
-        List<String> roles = new ArrayList<>();
+        return dto;
+    }
 
-        entity.getRoleEntities().forEach(roleEntity -> {
-            roles.add(roleEntity.getRoleName());
-        });
-
-        dto.setRoles(roles);
+    public UserDTO toDTO(UserDetails userDetails) {
+        UserDTO dto = modelMapper.map(userDetails, UserDTO.class);
         return dto;
     }
 
     public List<UserEntity> toEntityList(List<UserDTO> fieldDTOS) {
-        List<UserEntity> userEntities = new ArrayList<>();
+        List<UserEntity> entities = new ArrayList<>();
 
         fieldDTOS.forEach((dto -> {
-            userEntities.add(toEntity(dto));
+            entities.add(toEntity(dto));
         }));
 
-        return userEntities;
+        return entities;
     }
 
     public List<UserDTO> toDTOList(List<UserEntity> fieldEntities) {
-        List<UserDTO> userDTOS = new ArrayList<>();
+        List<UserDTO> dtos = new ArrayList<>();
 
         fieldEntities.forEach(entity -> {
-            userDTOS.add(toDTO(entity));
+            dtos.add(toDTO(entity));
         });
 
-        return userDTOS;
+        return dtos;
     }
-
-    private List<RoleEntity> toRoleEntity(List<String> roles) {
-        List<RoleEntity> roleEntities = new ArrayList<>();
-        roles.forEach(role -> {
-            RoleEntity roleEntity = roleRepository.findOneByRoleName(role);
-            if(roleEntity == null) {
-                roleEntity = new RoleEntity();
-                roleEntity.setRoleName(role);
-            }
-            roleEntities.add(roleEntity);
-        });
-        return roleEntities;
-    }
-
 }

@@ -28,6 +28,13 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private Date modifiedDate;
 
+    public BaseEntity() {
+    }
+
+    public BaseEntity(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

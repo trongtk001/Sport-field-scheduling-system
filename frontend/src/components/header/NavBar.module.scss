@@ -1,39 +1,48 @@
-
 .nav {
-  padding: 8px 20px;
+    padding: 8px 20px;
 
-  a {
-    margin: 4px 0;
-  }
-
-  .icon {
-    width: 25px;
-    margin-left: 15px;
-  }
-
-  .authentication {
-    min-width: 176px;
-    float: right;
-    margin: 4px 0;
-
-    button {
-      width: 80px;
-      margin-left: 8px;
-
-
-      &:hover {
-        background-color: var(--primary-light);
-        color: var(--text-color);
-      }
-      
-      &:focus {
-        box-shadow: none;
-      }
+    a {
+        margin: 4px 0;
+        margin-left: 8px;
     }
 
-    .login-btn {
-        color: var(--text-color);
+    .icon {
+        width: 25px;
+        margin-left: 15px;
     }
-  }
+
+    .action {
+        .authentication {
+            min-width: 176px;
+            float: right;
+            margin: 4px 0;
+
+            button {
+                width: 80px;
+                margin-left: 8px;
+
+                &:hover {
+                    background-color: var(--primary-light);
+                    color: var(--text-color);
+                }
+
+                &:focus {
+                    box-shadow: none;
+                }
+            }
+
+            .login-btn {
+                color: var(--text-color);
+
+                &:focus {
+                    background-color: var(--primary-light);
+                    box-shadow: 0 0 0 0.25rem var(--primary-light);
+                }
+            }
+        }
+
+        a {
+            
+        }
+    }
 }
-

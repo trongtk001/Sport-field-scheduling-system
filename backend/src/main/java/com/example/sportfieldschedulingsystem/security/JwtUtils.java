@@ -40,14 +40,14 @@ public class JwtUtils {
             return null;
         }
     }
-    public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+    public ResponseCookie generateJwtCookie(String username) {
+        String jwt = generateTokenFromUsername(username);
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/").maxAge(60 * 60).httpOnly(true).build();
         return cookie;
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
+        ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/").build();
         return cookie;
     }
 
@@ -68,7 +68,7 @@ public class JwtUtils {
             JWT.require(getAlgorithm()).build().verify(authToken);
             return true;
         } catch (JWTVerificationException e) {
-            logger.error("Failed token {}: {}", e.getMessage());
+            logger.warn("Failed token {}: {}", e.getMessage());
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }

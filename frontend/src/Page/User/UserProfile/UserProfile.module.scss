@@ -1,0 +1,40 @@
+.title {
+    text-align: center;
+    margin: 0;
+}
+
+.image {
+    .img {
+        width: 250px;
+        height: 250px;
+    }
+}
+.info {
+    margin: auto 0;
+
+    .text-field {
+        margin: 8px 0;
+        text-align: center;
+        width: 100%;
+        border-bottom: 2px solid #a6a6a6;
+
+        &:focus-within {
+            border-color: #2e7d32;
+        }
+
+        .input {
+            border: none;
+            background-color: transparent;
+            text-align: center;
+            width: 400px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+.error {
+    color: red;
+}

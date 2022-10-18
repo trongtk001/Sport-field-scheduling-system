@@ -4,15 +4,16 @@
 <suite name="Test authentication">
 
 
-<!--    <test name="register successful">-->
-<!--        <classes>-->
-<!--            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">-->
-<!--                <methods>-->
-<!--                    <include name="testRegisterSuccessful"></include>-->
-<!--                </methods>-->
-<!--            </class>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="register successful">
+        <classes>
+            <class name="com.example.sportfieldschedulingsystem.testng.TestWithXML">
+                <methods>
+                    <include name="testRegisterSuccessful"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
     <test name="register failed">
         <classes>
             <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
@@ -23,12 +24,11 @@
         </classes>
     </test>
 
-
     <test name="login successful">
         <parameter name="username" value="user"></parameter>
         <parameter name="password" value="password"></parameter>
         <classes>
-            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+            <class name="com.example.sportfieldschedulingsystem.testng.TestWithXML">
                 <methods>
                     <include name="testLoginSuccessful"></include>
                 </methods>
@@ -39,7 +39,7 @@
         <parameter name="username" value="user"></parameter>
         <parameter name="password" value="password1"></parameter>
         <classes>
-            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+            <class name="com.example.sportfieldschedulingsystem.testng.TestWithXML">
                 <methods>
                     <include name="testLoginFailed"></include>
                 </methods>
@@ -51,7 +51,7 @@
         <parameter name="username" value="user"></parameter>
         <parameter name="password" value="password1"></parameter>
         <classes>
-            <class name="com.example.sportfieldschedulingsystem.testng.TestAPI">
+            <class name="com.example.sportfieldschedulingsystem.testng.TestWithXML">
                 <methods>
                     <include name="testLogout"></include>
                 </methods>

@@ -6,16 +6,31 @@ import javax.persistence.*;
 @Table(name = "feedback")
 public class FeedbackEntity extends BaseEntity{
 
+    @Column(columnDefinition = "nvarchar(500)")
+    private String feedbackDetail;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
     @ManyToOne
     @JoinColumn(name = "field_id")
-    private FieldEntity fieldEntityFB;
+    private FieldEntity fieldEntity;
 
-    @Column(columnDefinition = "nvarchar(500)")
-    private String feedbackDetail;
+    public FeedbackEntity() {
+    }
+
+    public FeedbackEntity(Long id) {
+        super(id);
+    }
+
+    public String getFeedbackDetail() {
+        return feedbackDetail;
+    }
+
+    public void setFeedbackDetail(String feedbackDetail) {
+        this.feedbackDetail = feedbackDetail;
+    }
 
     public UserEntity getUserEntity() {
         return userEntity;
@@ -25,19 +40,11 @@ public class FeedbackEntity extends BaseEntity{
         this.userEntity = userEntity;
     }
 
-    public FieldEntity getFieldEntityFB() {
-        return fieldEntityFB;
+    public FieldEntity getFieldEntity() {
+        return fieldEntity;
     }
 
-    public void setFieldEntityFB(FieldEntity fieldEntityFB) {
-        this.fieldEntityFB = fieldEntityFB;
-    }
-
-    public String getFeedbackDetail() {
-        return feedbackDetail;
-    }
-
-    public void setFeedbackDetail(String feedbackDetail) {
-        this.feedbackDetail = feedbackDetail;
+    public void setFieldEntity(FieldEntity fieldEntity) {
+        this.fieldEntity = fieldEntity;
     }
 }

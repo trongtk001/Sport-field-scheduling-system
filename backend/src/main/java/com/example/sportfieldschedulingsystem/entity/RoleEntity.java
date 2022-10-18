@@ -20,6 +20,13 @@ public class RoleEntity extends BaseEntity implements GrantedAuthority {
     @ManyToMany(mappedBy = "roleEntities")
     private List<UserEntity> userEntities = new ArrayList<>();
 
+    public RoleEntity() {
+    }
+
+    public RoleEntity(Long id) {
+        super(id);
+    }
+
     @Override
     public String getAuthority() {
         return roleName;
@@ -33,10 +40,11 @@ public class RoleEntity extends BaseEntity implements GrantedAuthority {
         this.roleName = roleName;
     }
 
-    @Override
-    public String toString() {
-        return "RoleEntity{" +
-                "roleName='" + roleName + '\'' +
-                '}';
+    public List<UserEntity> getUserEntities() {
+        return userEntities;
+    }
+
+    public void setUserEntities(List<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 }

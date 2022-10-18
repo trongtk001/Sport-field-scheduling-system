@@ -12,28 +12,26 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 
-    private long id;
-    private String username;
+    private String userName;
     private String password;
-    private String fullname;
-    private String email;
+    private String fullName;
+    private String gmail;
     private String phone;
     private byte status;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(long id, String username, String password, String fullname, String email, String phone, byte status, Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
+    public UserDetailsImpl(String userName, String password, String fullName, String gmail, String phone, byte status, Collection<? extends GrantedAuthority> authorities) {
+        this.userName = userName;
         this.password = password;
-        this.fullname = fullname;
-        this.email = email;
+        this.fullName = fullName;
+        this.gmail = gmail;
         this.phone = phone;
         this.status = status;
         this.authorities = authorities;
     }
 
     public static UserDetailsImpl build(UserEntity user) {
-        return new UserDetailsImpl(user.getId(), user.getUserName(), user.getPassword(), user.getFullName(), user.getGmail(), user.getPhone(), user.getStatus(),user.getRoleEntities());
+        return new UserDetailsImpl(user.getUserName(), user.getPassword(), user.getFullName(), user.getGmail(), user.getPhone(), user.getStatus(), user.getRoleEntities());
     }
 
     @Override
@@ -48,7 +46,7 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return userName;
     }
 
     @Override
@@ -71,36 +69,32 @@ public class UserDetailsImpl implements UserDetails {
         return status == 1;
     }
 
-    public long getId() {
-        return id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getGmail() {
+        return gmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setGmail(String gmail) {
+        this.gmail = gmail;
     }
 
     public String getPhone() {
@@ -121,5 +115,9 @@ public class UserDetailsImpl implements UserDetails {
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
+    }
+
+    public List<String> getRolesName() {
+        return authorities.stream().map(authorities -> authorities.getAuthority()).collect(Collectors.toList());
     }
 }

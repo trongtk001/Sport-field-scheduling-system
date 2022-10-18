@@ -11,6 +11,16 @@ public class FieldOutput {
     private int totalPage;
     private List<FieldDTO> list = new ArrayList<>();
 
+    public FieldOutput() {
+    }
+
+    public FieldOutput(int page, int size, int totalPage, List<FieldDTO> list) {
+        this.page = page;
+        this.size = size;
+        this.totalPage = totalPage;
+        this.list = list;
+    }
+
     public int getPage() {
         return page;
     }
@@ -43,7 +53,4 @@ public class FieldOutput {
         this.list = list;
     }
 
-    public void calTotalPage(int size, int totalItem) {
-        this.totalPage = (int) Math.ceil((double) totalItem / size);
-    }
 }

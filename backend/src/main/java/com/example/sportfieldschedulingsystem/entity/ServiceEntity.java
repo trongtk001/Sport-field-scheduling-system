@@ -18,14 +18,16 @@ public class ServiceEntity extends BaseEntity{
     private double price;
 
     @ManyToMany(mappedBy = "serviceEntities")
-    private List<FieldEntity> fieldEntityList = new ArrayList<>();
+    private List<FieldEntity> fieldEntities = new ArrayList<>();
 
-    public List<FieldEntity> getFieldEntityList() {
-        return fieldEntityList;
+    @ManyToMany(mappedBy = "serviceEntities")
+    private List<ScheduleDetailEntity> scheduleDetailEntities = new ArrayList<>();
+
+    public ServiceEntity() {
     }
 
-    public void setFieldEntityList(List<FieldEntity> fieldEntityList) {
-        this.fieldEntityList = fieldEntityList;
+    public ServiceEntity(Long id) {
+        super(id);
     }
 
     public String getServiceName() {
@@ -50,5 +52,21 @@ public class ServiceEntity extends BaseEntity{
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public List<FieldEntity> getFieldEntities() {
+        return fieldEntities;
+    }
+
+    public void setFieldEntities(List<FieldEntity> fieldEntities) {
+        this.fieldEntities = fieldEntities;
+    }
+
+    public List<ScheduleDetailEntity> getScheduleDetailEntities() {
+        return scheduleDetailEntities;
+    }
+
+    public void setScheduleDetailEntities(List<ScheduleDetailEntity> scheduleDetailEntities) {
+        this.scheduleDetailEntities = scheduleDetailEntities;
     }
 }

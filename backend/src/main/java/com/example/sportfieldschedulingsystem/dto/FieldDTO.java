@@ -6,7 +6,16 @@ public class FieldDTO extends BaseDTO{
     private String type;
     private String address;
     private String description;
+    private String thumbnailUrl;
     private Double price;
+    private boolean status;
+
+    public FieldDTO() {
+    }
+
+    public FieldDTO(Long id) {
+        super(id);
+    }
 
     public String getFieldName() {
         return fieldName;
@@ -40,11 +49,27 @@ public class FieldDTO extends BaseDTO{
         this.description = description;
     }
 
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
+
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

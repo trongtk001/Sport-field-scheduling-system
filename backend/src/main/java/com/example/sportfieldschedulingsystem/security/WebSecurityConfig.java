@@ -14,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
@@ -58,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-        //auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("password")).roles("admin");
+        // auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("password")).roles("admin");
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -66,8 +67,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
-
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
 
 //        http.authorizeRequests().antMatchers("/").permitAll();
 //

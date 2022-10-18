@@ -1,0 +1,19 @@
+
+.wrapper {
+    height: 100vh;
+
+  form {
+    justify-content: space-between;
+
+    .error-msg {
+      width: 100%;
+      color: #e91313;
+    }
+  }
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

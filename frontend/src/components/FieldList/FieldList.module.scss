@@ -1,0 +1,54 @@
+.card-item {
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 20px 0;
+
+  .thumbnail {
+    min-width: 234px;
+    min-height: 175px;
+    img {
+      width: 100%;
+    }
+  }
+  
+
+  .info {
+    padding: 10px;
+    min-height: 280px;
+
+    h2,
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+    }
+
+    a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    h2 {
+      -webkit-line-clamp: 2; /* number of lines to show */
+      min-height: 77px;
+    }
+
+    P:nth-child(2) {
+      -webkit-line-clamp: 3; /* number of lines to show */
+      min-height: 72px;
+    }
+  }
+
+  button {
+    border: none;
+    background-color: var(--primary);
+    padding: 5px 10px;
+    color: #fff;
+
+    &:hover {
+      background-color: var(--primary-light);
+      color: var(--text-color);
+    }
+  }
+}

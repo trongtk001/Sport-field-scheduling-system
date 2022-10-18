@@ -35,22 +35,22 @@ public class RoleMapper {
     }
 
     public List<RoleEntity> toEntityList(List<RoleDTO> fieldDTOs) {
-        List<RoleEntity> roleEntities = new ArrayList<>();
+        List<RoleEntity> entities = new ArrayList<>();
 
         fieldDTOs.forEach((fieldDTO -> {
-            roleEntities.add(modelMapper.map(fieldDTO, RoleEntity.class));
+            entities.add(modelMapper.map(fieldDTO, RoleEntity.class));
         }));
 
-        return roleEntities;
+        return entities;
     }
 
     public List<RoleDTO> toDTOList(List<RoleEntity> roleEntities) {
-        List<RoleDTO> fieldDTOs = new ArrayList<>();
+        List<RoleDTO> dtos = new ArrayList<>();
 
         roleEntities.forEach(entity -> {
-            fieldDTOs.add(modelMapper.map(entity, RoleDTO.class));
+            dtos.add(modelMapper.map(entity, RoleDTO.class));
         });
 
-        return fieldDTOs;
+        return dtos;
     }
 }

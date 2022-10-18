@@ -3,6 +3,7 @@ package com.example.sportfieldschedulingsystem.entity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +19,10 @@ public class UserEntity extends BaseEntity{
     private String phone;
     @Column(length = 50)
     private String gmail;
+    @Column(columnDefinition = "nvarchar(300)")
+    private String address;
+    @Column(length = 200)
+    private String avatar;
     @Column(nullable = false)
     private byte status;
 
@@ -26,60 +31,18 @@ public class UserEntity extends BaseEntity{
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleEntity> roleEntities = new ArrayList<>();
 
-
-    @OneToMany(mappedBy = "userEntity")
+    @OneToMany(mappedBy = "userEntity", targetEntity = FeedbackEntity.class)
     private List<FeedbackEntity> feedbackEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<OrderEntity> orderEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "userEntity", targetEntity = ScheduleEntity.class)
+    private List<ScheduleEntity> scheduleEntities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "userEntity")
-    private List<ScheduleEntity> schedulingEntities = new ArrayList<>();
-
-    public List<RoleEntity> getRoleEntities() {
-        return roleEntities;
+    public UserEntity() {
     }
 
-    public void setRoleEntities(List<RoleEntity> roleEntities) {
-        this.roleEntities = roleEntities;
+    public UserEntity(Long id) {
+        super(id);
     }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setStatus(byte status) {
-        this.status = status;
-    }
-
-    public List<FeedbackEntity> getFeedbackEntities() {
-        return feedbackEntities;
-    }
-
-    public void setFeedbackEntities(List<FeedbackEntity> feedbackEntities) {
-        this.feedbackEntities = feedbackEntities;
-    }
-
-    public List<ScheduleEntity> getSchedulingEntities() {
-        return schedulingEntities;
-    }
-
-    public void setSchedulingEntities(List<ScheduleEntity> schedulingEntities) {
-        this.schedulingEntities = schedulingEntities;
-    }
-
-    public List<OrderEntity> getOrderEntities() {
-        return orderEntities;
-    }
-
-    public void setOrderEntities(List<OrderEntity> orderEntities) {
-        this.orderEntities = orderEntities;
-    }
-
 
     public String getUserName() {
         return userName;
@@ -95,6 +58,14 @@ public class UserEntity extends BaseEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPhone() {
@@ -113,11 +84,57 @@ public class UserEntity extends BaseEntity{
         this.gmail = gmail;
     }
 
-    public Byte getStatus() {
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public byte getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(byte status) {
         this.status = status;
+    }
+
+    public List<RoleEntity> getRoleEntities() {
+        return roleEntities;
+    }
+
+    public void setRoleEntities(List<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
+    }
+
+    public List<FeedbackEntity> getFeedbackEntities() {
+        return feedbackEntities;
+    }
+
+    public void setFeedbackEntities(List<FeedbackEntity> feedbackEntities) {
+        this.feedbackEntities = feedbackEntities;
+    }
+
+    public List<ScheduleEntity> getScheduleEntities() {
+        return scheduleEntities;
+    }
+
+    public void setScheduleEntities(List<ScheduleEntity> scheduleEntities) {
+        this.scheduleEntities = scheduleEntities;
+    }
+
+    public List<String> getRolesName() {
+        List<String> rolesName = new ArrayList<>();
+        roleEntities.forEach(roleEntity -> rolesName.add(roleEntity.getRoleName()));
+        return rolesName;
     }
 }

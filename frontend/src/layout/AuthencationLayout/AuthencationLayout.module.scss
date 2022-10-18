@@ -1,0 +1,51 @@
+$box-height: 700px;
+$box-width: 600px;
+
+.wrapper {
+    background-image: url("../../../public/footballground.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    .close-icon {
+        color: rgb(15, 51, 214);
+        font-size: 30px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-right: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    form {
+        background-color: #fff;
+        padding: 50px;
+        border: 1px solid #000;
+        width: $box-width;
+        height: $box-height;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        h1 {
+            text-align: center;
+        }
+
+        button {
+            background-color: var(--primary);
+
+            &:hover {
+                color: var(--primary);
+                background-color: var(--primary-light);
+            }
+        }
+
+        a {
+            color: var(--primary);
+            text-align: center;
+        }
+    }
+}

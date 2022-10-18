@@ -1,5 +1,5 @@
 :root {
-  --primary: #198754;
+  --primary: #2e7d32;
   --primary-light: #bbeb8a86;
   --text-color: #198754;
 }
@@ -27,4 +27,10 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #198754;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

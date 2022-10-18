@@ -1,9 +1,5 @@
 package com.example.sportfieldschedulingsystem.dto;
 
-import com.example.sportfieldschedulingsystem.entity.RoleEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import java.util.List;
 
 public class UserDTO extends BaseDTO{
@@ -13,8 +9,17 @@ public class UserDTO extends BaseDTO{
     private String fullName;
     private String phone;
     private String gmail;
+    private String address;
+    private String avatar;
     private byte status;
     private List<String> roles;
+
+    public UserDTO() {
+    }
+
+    public UserDTO(Long id) {
+        super(id);
+    }
 
     public String getUserName() {
         return userName;
@@ -56,6 +61,22 @@ public class UserDTO extends BaseDTO{
         this.gmail = gmail;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public byte getStatus() {
         return status;
     }
@@ -71,5 +92,4 @@ public class UserDTO extends BaseDTO{
     public void setRoles(List<String> roles) {
         this.roles = roles;
     }
-
 }

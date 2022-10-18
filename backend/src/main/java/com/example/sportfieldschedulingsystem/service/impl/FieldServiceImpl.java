@@ -5,11 +5,12 @@ import com.example.sportfieldschedulingsystem.entity.FieldEntity;
 import com.example.sportfieldschedulingsystem.mapper.FieldMapper;
 import com.example.sportfieldschedulingsystem.repository.FieldRepository;
 import com.example.sportfieldschedulingsystem.service.FieldService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class FieldServiceImpl implements FieldService {
@@ -21,11 +22,6 @@ public class FieldServiceImpl implements FieldService {
     public FieldServiceImpl(FieldRepository fieldRepository, FieldMapper fieldMapper) {
         this.fieldRepository = fieldRepository;
         this.fieldMapper = fieldMapper;
-    }
-
-    @Override
-    public FieldDTO createNew(FieldDTO dto) {
-        return null;
     }
 
     @Override
@@ -48,18 +44,60 @@ public class FieldServiceImpl implements FieldService {
             fieldRepository.delete(entity);
             return fieldMapper.toDTO(entity);
         } else {
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found this field");
         }
     }
 
     @Override
-    public List<FieldDTO> findAll(Pageable pageable) {
-        List<FieldDTO> dtoList = new ArrayList<>();
-        List<FieldEntity> entityList = fieldRepository.findAll(pageable).getContent();
-        entityList.forEach(entity -> {
-            dtoList.add(fieldMapper.toDTO(entity));
-        });
-        return dtoList;
+    public FieldDTO search(Long id) {
+        FieldEntity fieldEntity =fieldRepository.findById(id).orElse(null);
+        return fieldMapper.toDTO(fieldEntity);
+    }
+
+    @Override
+    public Page<FieldDTO> search(String q,Pageable pageable) {
+        Page<FieldEntity> fieldEntities = fieldRepository.findByFieldNameContainingOrAddressContaining(q, q, pageable);
+
+        Page<FieldDTO> fieldDTOS = new PageImpl<>(fieldMapper.toDTOList(fieldEntities.getContent()), pageable, fieldEntities.getTotalElements());
+
+        return fieldDTOS;
+    }
+
+
+    @Override
+    public Page<FieldDTO> searchFilteredByType(String q, String type, Pageable pageable) {
+        Page<FieldEntity> fieldEntities = fieldRepository.findByFieldNameContainingOrAddressContainingAndType(q, q, type, pageable);
+
+        Page<FieldDTO> fieldDTOS = new PageImpl<>(fieldMapper.toDTOList(fieldEntities.getContent()), pageable, fieldEntities.getTotalElements());
+
+        return fieldDTOS;
+    }
+
+    @Override
+    public Page<FieldDTO> findAll(Pageable pageable) {
+        Page<FieldEntity> fieldEntities = fieldRepository.findAll(pageable);
+
+        Page<FieldDTO> fieldDTOS = new PageImpl<>(fieldMapper.toDTOList(fieldEntities.getContent()), pageable, fieldEntities.getTotalElements());
+
+        return fieldDTOS;
+    }
+
+    @Override
+    public Page<FieldDTO> findAllByStatus(boolean status, Pageable pageable) {
+        Page<FieldEntity> fieldEntities = fieldRepository.findAllByStatus(status, pageable);
+
+        Page<FieldDTO> fieldDTOS = new PageImpl<>(fieldMapper.toDTOList(fieldEntities.getContent()), pageable, fieldEntities.getTotalElements());
+
+        return fieldDTOS;
+    }
+
+    @Override
+    public Page<FieldDTO> filterByType(String type, Pageable pageable) {
+        Page<FieldEntity> fieldEntities = fieldRepository.findByType(type, pageable);
+
+        Page<FieldDTO> fieldDTOS = new PageImpl<>(fieldMapper.toDTOList(fieldEntities.getContent()), pageable, fieldEntities.getTotalElements());
+
+        return fieldDTOS;
     }
 
     @Override
@@ -67,45 +105,4 @@ public class FieldServiceImpl implements FieldService {
         return (int) fieldRepository.count();
     }
 
-    @Override
-    public int countTotalItemContainNameOrAddress(String q) {
-        return (int) fieldRepository.countByFieldNameContainingOrAddressContaining(q, q);
-    }
-
-    @Override
-    public int countTotalItemContainNameOrAddressAndHaveType(String q, String type) {
-        return (int) fieldRepository.countByFieldNameContainingOrAddressContainingAndType(q, q, type);
-    }
-
-    @Override
-    public int countTotalItemByType(String type) {
-        return (int) fieldRepository.countByType(type);
-    }
-
-    @Override
-    public List<FieldDTO> search(String q,Pageable pageable) {
-        List<FieldEntity> entityList = fieldRepository.findByFieldNameContainingOrAddressContaining(q, q,pageable);
-
-        List<FieldDTO> dtoList = fieldMapper.toDTOList(entityList);
-
-        return dtoList;
-    }
-
-    @Override
-    public List<FieldDTO> searchFilteredByType(String q, String type, Pageable pageable) {
-        List<FieldEntity> entityList = fieldRepository.findByFieldNameContainingOrAddressContainingAndType(q, q, type, pageable);
-
-        List<FieldDTO> dtoList = fieldMapper.toDTOList(entityList);
-
-        return dtoList;
-    }
-
-    @Override
-    public List<FieldDTO> filterByType(String type, Pageable pageable) {
-        List<FieldEntity> entityList = fieldRepository.findByType(type, pageable);
-
-        List<FieldDTO> dtoList = fieldMapper.toDTOList(entityList);
-
-        return dtoList;
-    }
 }
